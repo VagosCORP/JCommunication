@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Communication" default="main">
+ 
+    <target name="init">
+        <tstamp />
+        <property name="name" value="Communication" />
+        <property name="version" value="20140909" />
+    </target>
+ 
+    <target name="main" depends="init, empaqueta" description="Compila y Empaqueta">
+        <echo message="Communicationx64.jar Creado!" />
+    </target>
+<!--  compila, -->
+<!--     <target name="compila" description="Compila"> -->
+<!--         <javaw srcdir="src" destdir="bin/classes" /> -->
+<!--     </target> -->
+ 
+    <target name="empaqueta" depends="init" description="Empaqueta">
+        <jar jarfile="${name}x64.jar" basedir="bin" index="no" compress="yes">
+            <manifest>
+            	<attribute name="Manifest-Version" value="1.2" />
+            	<attribute name="Created-By" value="VagosCORP" />
+            	<attribute name="Built-By" value="${user.name}" />
+                <attribute name="Specification-Title" value="${name}" />
+                <attribute name="Specification-Version" value="${version}" />
+                <attribute name="Main-Class" value="vclibs.communication.Communication" />
+            </manifest>
+        </jar>
+    </target>
+ 
+</project>
