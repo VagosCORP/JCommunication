@@ -41,6 +41,8 @@ public class Comunic extends SwingWorker<Integer, byte[]> {
 	public boolean idebug = true;
 	public boolean edebug = true;
 	
+	public boolean Flag_LowLevel = true;
+	
 	OnConnectionListener onConnListener;
 	OnComunicationListener onCOMListener;
 
@@ -200,8 +202,14 @@ public class Comunic extends SwingWorker<Integer, byte[]> {
 			int len = Integer.parseInt(new String(values.get(1)));
 			byte[] buffer = values.get(2);
 			String rcv = new String(buffer, 0, len);
+			int[] nrcv = new int[len];
+			if(Flag_LowLevel) {
+				for(int i = 0; i < len; i++) {
+					nrcv[i] = 0xFF & buffer[i];
+				}
+			}
 			if (onCOMListener != null)
-				onCOMListener.onDataReceived(rcv);
+				onCOMListener.onDataReceived(rcv, nrcv);
 			wlog(Inf.DATO_RECIBIDOx + rcv);
 		} else if (orden == CONECTADO) {
 			estado = CONNECTED;

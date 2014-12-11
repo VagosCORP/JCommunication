@@ -44,6 +44,8 @@ public class Comunic extends Task<Integer> {
 	public boolean debug = true;
 	public boolean idebug = true;
 	public boolean edebug = true;
+	
+	public boolean Flag_LowLevel = true;
 
 	//Eventos usados según el caso
 	OnConnectionListener onConnListener;
@@ -257,7 +259,7 @@ public class Comunic extends Task<Integer> {
 			Cortar_Conexion();
 		} else {
 			if (onCOMListener != null)
-				onCOMListener.onDataReceived(message);
+				onCOMListener.onDataReceived(message, null);
 			wlog(Inf.DATO_RECIBIDOx + message);
 		}
 		super.updateMessage(message);

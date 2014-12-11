@@ -152,7 +152,7 @@ public class LayoutController implements Initializable, OnConnectionListener, On
 	}
 
 	@Override
-	public void onDataReceived(final String dato) {
+	public void onDataReceived(final String dato, final int[] ndato) {
 		Platform.runLater(new Runnable() {
 			
 			@Override

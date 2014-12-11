@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>Communication</name>
+	<name>JCommunication</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -24,12 +24,12 @@
 		<link>
 			<name>src/vclibs/communication/Eventos.java</name>
 			<type>1</type>
-			<locationURI>PARENT-1-WORKSPACE_LOC/Android%20Projects/Communication/src/vclibs/communication/Eventos.java</locationURI>
+			<locationURI>PARENT-2-WORKSPACE_LOC/AndroidStudioProjects/VirtualTerminal/communication/src/main/java/vclibs/communication/Eventos.java</locationURI>
 		</link>
 		<link>
 			<name>src/vclibs/communication/Inf.java</name>
 			<type>1</type>
-			<locationURI>PARENT-1-WORKSPACE_LOC/Android%20Projects/Communication/src/vclibs/communication/Inf.java</locationURI>
+			<locationURI>PARENT-2-WORKSPACE_LOC/AndroidStudioProjects/VirtualTerminal/communication/src/main/java/vclibs/communication/Inf.java</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
