@@ -152,12 +152,15 @@ public class LayoutController implements Initializable, OnConnectionListener, On
 	}
 
 	@Override
-	public void onDataReceived(final String dato, final int[] ndato) {
+	public void onDataReceived(int nbytes, final String dato, final int[] ndato, byte[] bdato) {
 		Platform.runLater(new Runnable() {
 			
 			@Override
 			public void run() {
 				RCV.appendText(dato);
+//				for(int val:ndato) {
+//					RCV.appendText(val + " ");
+//	            }
 			}
 		});
 	}

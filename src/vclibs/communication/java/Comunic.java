@@ -209,7 +209,7 @@ public class Comunic extends SwingWorker<Integer, byte[]> {
 				}
 			}
 			if (onCOMListener != null)
-				onCOMListener.onDataReceived(rcv, nrcv);
+				onCOMListener.onDataReceived(len, rcv, nrcv, buffer);
 			wlog(Inf.DATO_RECIBIDOx + rcv);
 		} else if (orden == CONECTADO) {
 			estado = CONNECTED;

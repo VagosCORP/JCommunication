@@ -46,6 +46,7 @@ public class Comunic extends Task<Integer> {
 	public boolean edebug = true;
 	
 	public boolean Flag_LowLevel = true;
+	public boolean Flag_LowLevelSig = false;
 
 	//Eventos usados según el caso
 	OnConnectionListener onConnListener;
@@ -133,6 +134,10 @@ public class Comunic extends Task<Integer> {
 	 * @param dato
 	 */
 	public void enviar(int dato) {
+		enviar_Int8(dato);
+    }
+
+	public void enviar_Int8(int dato) {
 		try {
 			if (estado == CONNECTED)
 				outputSt.writeByte(dato);
@@ -142,6 +147,61 @@ public class Comunic extends Task<Integer> {
 				e.printStackTrace();
 		}
 	}
+
+    public void enviar_Int16(int dato) {
+        try {
+            if (estado == CONNECTED)
+                outputSt.writeShort(dato);
+        } catch (IOException e) {
+            wlog(e.getMessage());
+            if(edebug)
+                e.printStackTrace();
+        }
+    }
+
+    public void enviar_Int32(int dato) {
+        try {
+            if (estado == CONNECTED)
+                outputSt.writeInt(dato);
+        } catch (IOException e) {
+            wlog(e.getMessage());
+            if(edebug)
+                e.printStackTrace();
+        }
+    }
+
+    public void enviar_Int64(int dato) {
+        try {
+            if (estado == CONNECTED)
+                outputSt.writeLong(dato);
+        } catch (IOException e) {
+            wlog(e.getMessage());
+            if(edebug)
+                e.printStackTrace();
+        }
+    }
+
+    public void enviar_Float(float dato) {
+        try {
+            if (estado == CONNECTED)
+                outputSt.writeFloat(dato);
+        } catch (IOException e) {
+            wlog(e.getMessage());
+            if(edebug)
+                e.printStackTrace();
+        }
+    }
+
+    public void enviar_Double(double dato) {
+        try {
+            if (estado == CONNECTED)
+                outputSt.writeDouble(dato);
+        } catch (IOException e) {
+            wlog(e.getMessage());
+            if(edebug)
+                e.printStackTrace();
+        }
+    }
 
 	//Función de finalización de Conexión
 	public void Cortar_Conexion() {
@@ -241,25 +301,37 @@ public class Comunic extends Task<Integer> {
 	//Reporte de estado al hilo de ejecución principal
 	@Override
 	protected void updateMessage(String message) {
-		if (message == EN_ESPERA) {
+		if (message.equals(EN_ESPERA)) {
 			estado = WAITING;
 			ilog(Inf.EN_ESPERA);
-		} else if (message == DATO_RECIBIDO) {
+		} else if (message.equals(DATO_RECIBIDO)) {
 			
-		} else if (message == CONECTADO) {
+		} else if (message.equals(CONECTADO)) {
 			estado = CONNECTED;
 			if (onConnListener != null)
 				onConnListener.onConnectionstablished();
 			ilog(Inf.CONECTADO);
-		} else if (message == IO_EXCEPTION) {
+		} else if (message.equals(IO_EXCEPTION)) {
 //			wlog(Inf.IO_EXCEPTION);
 			estado = NULL;
-		} else if (message == CONEXION_PERDIDA) {
+		} else if (message.equals(CONEXION_PERDIDA)) {
 			wlog(Inf.CONEXION_PERDIDA);
 			Cortar_Conexion();
 		} else {
+			byte[] buffer = message.getBytes();
+			int len = buffer.length;
+			int[] nrcv = new int[len];
+            if(Flag_LowLevelSig) {
+                for(int i = 0; i < len; i++) {
+                    nrcv[i] = buffer[i];
+                }
+            }else if(Flag_LowLevel) {
+				for(int i = 0; i < len; i++) {
+					nrcv[i] = 0xFF & buffer[i];
+				}
+			}
 			if (onCOMListener != null)
-				onCOMListener.onDataReceived(message, null);
+				onCOMListener.onDataReceived(len, message, nrcv, buffer);
 			wlog(Inf.DATO_RECIBIDOx + message);
 		}
 		super.updateMessage(message);
